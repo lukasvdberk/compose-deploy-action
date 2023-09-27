@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: foo
-        uses: actions/compose-deploy-github@v1
+        uses: lukasvdberk/compose-deploy-action@v1
         env:
           # API_KEY: ${{ secrets.API_KEY }}
           API_KEY: '123' # TODO set this to your API key

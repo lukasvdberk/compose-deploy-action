@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import { DockerComposeService } from '../../shared/services/docker-compose.service';
+import { DockerComposeService } from './shared/services/docker-compose.service';
 
 const config = {
     registryHost: 'localhost:5000', // TODO set to production when done

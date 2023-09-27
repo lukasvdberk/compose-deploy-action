@@ -13,4 +13,4 @@ inputs:
     required: true
 runs:
   using: 'node20'
-  main: 'dist/compose-deploy-github/src/index.js'
+  main: 'dist/index.js'
