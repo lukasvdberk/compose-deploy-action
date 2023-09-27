@@ -7,7 +7,7 @@ jobs:
     name: ComposeDeploy
     steps:
       - uses: actions/checkout@v4
-      - id: foo
+      - id: ComposeDeploy
         uses: lukasvdberk/compose-deploy-action@v1
         env:
           # API_KEY: ${{ secrets.API_KEY }}
