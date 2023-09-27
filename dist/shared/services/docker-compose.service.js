@@ -50,7 +50,7 @@ class DockerComposeService {
      * Builds all images
      */
     async buildImages() {
-        await this.authenticateIfNecessary();
+        // await this.authenticateIfNecessary(); // TODO add authentication
         await (0, ensure_compose_file_exists_1.ensureComposeFileExists)(this.composeFilePath);
         await this.setImageForEachService();
         const composeCommand = `docker-compose -f ${this.composeFilePath} build`;
@@ -94,7 +94,7 @@ class DockerComposeService {
      * @returns {string} - output of the push command
      */
     async pushImages() {
-        await this.authenticateIfNecessary();
+        // await this.authenticateIfNecessary(); // TODO add authentication
         await (0, ensure_compose_file_exists_1.ensureComposeFileExists)(this.composeFilePath);
         const command = `docker-compose -f ${this.composeFilePath} push`;
         return await (0, run_command_1.runCommand)(command);
