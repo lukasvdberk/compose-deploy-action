@@ -1,0 +1,18 @@
+# workflow for testing the action.yml locally
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: ComposeDeploy
+    steps:
+      - uses: actions/checkout@v4
+      - id: foo
+        uses: actions/compose-deploy-github@v1
+        env:
+          # API_KEY: ${{ secrets.API_KEY }}
+          API_KEY: '123' # TODO set this to your API key
+        with:
+          project-id: 'test'
+          docker-compose-file: './docker-compose.yml'
+

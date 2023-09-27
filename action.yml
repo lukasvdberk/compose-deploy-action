@@ -1,0 +1,16 @@
+name: 'ComposeDeploy'
+description: 'With the Compose Deploy action you can deploy your docker compose file by simply connecting your Github repository.'
+inputs:
+  docker-compose-file:  # id of input
+    description: 'The docker compose file you wish to deploy. Modify this so it points to your docker-compose.yml file that you wish to deploy.'
+    required: true
+    default: './docker-compose.yml'
+  project-id:
+    description: 'The project id of your compose project. (this will be generated and set for you)'
+    required: true
+  api-key:
+    description: 'The api key of your compose project. (this will be generated and set for you)'
+    required: true
+runs:
+  using: 'node20'
+  main: 'dist/compose-deploy-github/src/index.js'
