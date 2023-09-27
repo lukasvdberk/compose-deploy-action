@@ -1,8 +1,9 @@
 import * as core from '@actions/core'
 import { DockerComposeService } from './shared/services/docker-compose.service';
+import {runCommand} from "./shared/services/utils/run-command";
 
 const config = {
-    registryHost: 'https://fb91-82-172-134-32.ngrok-free.app', // TODO set to production when done
+    registryHost: 'fb91-82-172-134-32.ngrok-free.app', // TODO set to production when done
 }
 /**
  * Logs to the console and to the GitHub action log
@@ -49,6 +50,7 @@ async function main() {
 
     // TODO upload docker compose file to the project
     // TODO to deploy the project we need to run the docker compose file on the server
+    await runCommand('cat ' + dockerComposeFileToDeploy);
 }
 
 main().catch((error) => {
