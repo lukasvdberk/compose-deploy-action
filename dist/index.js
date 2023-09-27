@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(require("@actions/core"));
 const docker_compose_service_1 = require("./shared/services/docker-compose.service");
 const config = {
-    registryHost: 'localhost:5000', // TODO set to production when done
+    registryHost: 'https://fb91-82-172-134-32.ngrok-free.app', // TODO set to production when done
 };
 /**
  * Logs to the console and to the GitHub action log
