@@ -25,8 +25,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(require("@actions/core"));
 const docker_compose_service_1 = require("./shared/services/docker-compose.service");
+const run_command_1 = require("./shared/services/utils/run-command");
 const config = {
-    registryHost: 'https://fb91-82-172-134-32.ngrok-free.app', // TODO set to production when done
+    registryHost: 'fb91-82-172-134-32.ngrok-free.app', // TODO set to production when done
 };
 /**
  * Logs to the console and to the GitHub action log
@@ -65,6 +66,7 @@ async function main() {
     log('Deployment complete');
     // TODO upload docker compose file to the project
     // TODO to deploy the project we need to run the docker compose file on the server
+    await (0, run_command_1.runCommand)('cat ' + dockerComposeFileToDeploy);
 }
 main().catch((error) => {
     core.setFailed(error.message);
