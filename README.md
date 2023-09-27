@@ -14,3 +14,12 @@ The GitHub action will do the following.
 
 # Setup
 This action is created using nodejs 20 and Typescript.
+
+# Create a new version
+To release a new version you need to create a git tag with the version number. This will trigger the GitHub action to build and publish the new version to the GitHub marketplace.
+```bash
+# replace release name with the version number
+ git tag -a -m "ReleaseName" v1
+# push the tags to Github
+git push --follow-tags
+```
