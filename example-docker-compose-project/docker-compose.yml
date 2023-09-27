@@ -1,0 +1,22 @@
+version: '3'
+services:
+  nginx-site:
+    build: nginx-site
+    ports:
+      - '80:80'
+    image: localhost:5000/project1/nginx-site:latest
+  nginx-site2:
+    build: nginx-site
+    ports:
+      - '81:80'
+    image: localhost:5000/project1/nginx-site2:latest
+  nginx-site3:
+    build: nginx-site
+    ports:
+      - '82:80'
+    image: localhost:5000/project1/nginx-site3:latest
+  nginx-site4:
+    build: nginx-site
+    ports:
+      - '83:80'
+    image: localhost:5000/project1/nginx-site4:latest
