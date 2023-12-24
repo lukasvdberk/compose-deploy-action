@@ -25,9 +25,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(require("@actions/core"));
 const docker_compose_service_1 = require("./shared/services/docker-compose.service");
-const run_command_1 = require("./shared/services/utils/run-command");
+const deployment_service_1 = require("./shared/services/deployment.service");
+const fs_1 = require("fs");
 const config = {
-    registryHost: 'fb91-82-172-134-32.ngrok-free.app', // TODO set to production when done
+    registryHost: 'https://registry.ployer.app',
+    apiBaseUrl: 'https://06c6-77-250-197-97.ngrok-free.app',
 };
 /**
  * Logs to the console and to the GitHub action log
@@ -35,6 +37,10 @@ const config = {
 function log(logMessage) {
     console.log(logMessage);
     core.debug(logMessage);
+}
+async function getDockerComposeFileContent(dockerComposeFilePath) {
+    const dockerComposeFileContent = await fs_1.promises.readFile(dockerComposeFilePath);
+    return dockerComposeFileContent;
 }
 /**
  * GitHub action for deploying a project
@@ -49,6 +55,7 @@ async function main() {
         throw new Error('Docker compose file is required');
     if (!apiKey)
         throw new Error('API key is required. Make sure you set the API_KEY environment variable');
+    const dockerComposeFileContent = await getDockerComposeFileContent(dockerComposeFileToDeploy);
     log(`Deploying project ${projectId} with docker-compose file ${dockerComposeFileToDeploy}`);
     const composeService = new docker_compose_service_1.DockerComposeService(dockerComposeFileToDeploy, config.registryHost, projectId, // use the project id as the image name prefix
     {
@@ -64,9 +71,12 @@ async function main() {
     log(pushLog.logMessages);
     log(pushLog.errors);
     log('Deployment complete');
-    // TODO upload docker compose file to the project
-    // TODO to deploy the project we need to run the docker compose file on the server
-    await (0, run_command_1.runCommand)('cat ' + dockerComposeFileToDeploy);
+    // finally deploy to our own backend
+    const deploymentService = new deployment_service_1.DeploymentService(config.apiBaseUrl, projectId, apiKey);
+    // update with newest compose file from repository
+    await deploymentService.uploadDockerComposeFile(dockerComposeFileContent);
+    // redeploy the containers with the new compose file
+    await deploymentService.deployProject();
 }
 main().catch((error) => {
     core.setFailed(error.message);
