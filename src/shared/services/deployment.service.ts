@@ -2,8 +2,15 @@ import FormData from 'form-data';
 import axios from "axios";
 const fs = require('fs');
 
-// TODO docs
+/**
+ * Service for deploying a project to our own API
+ */
 export class DeploymentService {
+    /**
+     * @param apiBaseUrl - The base url of the API to deploy to (e.g. https://api.ployer.app)
+     * @param projectId - The id of the project to deploy
+     * @param apiKey - The api key to use for authentication
+     */
     constructor(
         private apiBaseUrl: string,
         private projectId: string,
@@ -12,13 +19,15 @@ export class DeploymentService {
     }
 
     async uploadDockerComposeFile(dockerComposeFileContent: Buffer) {
+        console.log(`${this.getProjectApiUrlWithProjectId()}/set-docker-compose-file`)
         const authorisationHeaders = this.getAuthorisationHeaders();
         await this.postFile(`${this.getProjectApiUrlWithProjectId()}/set-docker-compose-file`, 'PUT', dockerComposeFileContent, authorisationHeaders);
     }
 
 
     async deployProject() {
-        const response = await axios.put(`${this.apiBaseUrl}/${this.projectId}/deploy`, {}, {
+        console.log(`${this.getProjectApiUrlWithProjectId()}/deploy`)
+        const response = await axios.put(`${this.getProjectApiUrlWithProjectId()}/deploy`, {}, {
             headers: this.getAuthorisationHeaders()
         });
         return response.data;
@@ -27,7 +36,7 @@ export class DeploymentService {
 
     private async postFile(url:string, method: string, fileContent: Buffer, headers: any): Promise<any> {
         const formData = new FormData();
-        formData.append("file", fs.createReadStream(fileContent));
+        formData.append("file", fileContent, { filename : 'docker-compose.yml' });
         const response = await axios({
             method: method,
             url: url,
@@ -46,6 +55,6 @@ export class DeploymentService {
         }
     }
     private getProjectApiUrlWithProjectId() {
-        return `${this.apiBaseUrl}/${this.projectId}`;
+        return `${this.apiBaseUrl}/api/deployment/${this.projectId}`;
     }
 }

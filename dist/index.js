@@ -70,13 +70,13 @@ async function main() {
     const pushLog = await composeService.pushImages();
     log(pushLog.logMessages);
     log(pushLog.errors);
-    log('Deployment complete');
     // finally deploy to our own backend
     const deploymentService = new deployment_service_1.DeploymentService(config.apiBaseUrl, projectId, apiKey);
     // update with newest compose file from repository
     await deploymentService.uploadDockerComposeFile(dockerComposeFileContent);
     // redeploy the containers with the new compose file
     await deploymentService.deployProject();
+    log('Deployment complete');
 }
 main().catch((error) => {
     core.setFailed(error.message);

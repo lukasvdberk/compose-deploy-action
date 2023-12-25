@@ -24,7 +24,7 @@ npm run build
 To release a new version you need to create a git tag with the version number. This will trigger the GitHub action to build and publish the new version to the GitHub marketplace.
 ```bash
 # replace release name with the version number
- git tag -a -m "ReleaseName" v1
+git tag -a -m "ReleaseName" v1
 # push the tags to Github
 git push --follow-tags
 ```

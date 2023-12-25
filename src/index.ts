@@ -54,9 +54,6 @@ async function main() {
     log(pushLog.logMessages);
     log(pushLog.errors);
 
-    log('Deployment complete');
-
-
     // finally deploy to our own backend
     const deploymentService = new DeploymentService(config.apiBaseUrl, projectId, apiKey);
     // update with newest compose file from repository
@@ -64,6 +61,7 @@ async function main() {
 
     // redeploy the containers with the new compose file
     await deploymentService.deployProject();
+    log('Deployment complete');
 }
 
 
