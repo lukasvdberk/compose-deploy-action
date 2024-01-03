@@ -19,14 +19,12 @@ export class DeploymentService {
     }
 
     async uploadDockerComposeFile(dockerComposeFileContent: Buffer) {
-        console.log(`${this.getProjectApiUrlWithProjectId()}/set-docker-compose-file`)
         const authorisationHeaders = this.getAuthorisationHeaders();
         await this.postFile(`${this.getProjectApiUrlWithProjectId()}/set-docker-compose-file`, 'PUT', dockerComposeFileContent, authorisationHeaders);
     }
 
 
     async deployProject() {
-        console.log(`${this.getProjectApiUrlWithProjectId()}/deploy`)
         const response = await axios.put(`${this.getProjectApiUrlWithProjectId()}/deploy`, {}, {
             headers: this.getAuthorisationHeaders()
         });
