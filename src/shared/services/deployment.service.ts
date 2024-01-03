@@ -1,6 +1,5 @@
 import FormData from 'form-data';
 import axios from "axios";
-const fs = require('fs');
 
 /**
  * Service for deploying a project to our own API
