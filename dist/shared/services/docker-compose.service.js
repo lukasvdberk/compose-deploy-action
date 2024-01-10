@@ -33,7 +33,9 @@ const { promises: fs } = require('fs');
 const yaml = require('js-yaml');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const exec = util.promisify(require('child_process').exec);
-// TODO docs
+/**
+ * Runs a command in the terminal and returns the output
+ */
 class DockerComposeService {
     composeFilePath;
     registryHost;
@@ -60,11 +62,8 @@ class DockerComposeService {
         return `${this.registryHost}/${this.imageNamePrefix}/${serviceName}:latest`;
     }
     async authenticateIfNecessary() {
-        if (!this.isAuthenticated) {
-            const command = this.dockerLoginCommand();
-            await (0, run_command_1.runCommand)(command);
-            this.isAuthenticated = true;
-        }
+        const command = this.dockerLoginCommand();
+        await (0, run_command_1.runCommand)(command);
     }
     dockerLoginCommand() {
         return `docker login -u ${this.dockerLoginCredentials.username} -p ${this.dockerLoginCredentials.password} ${this.registryHost}`;
@@ -94,7 +93,7 @@ class DockerComposeService {
      * @returns {string} - output of the push command
      */
     async pushImages() {
-        // await this.authenticateIfNecessary(); // TODO add authentication
+        await this.authenticateIfNecessary();
         await (0, ensure_compose_file_exists_1.ensureComposeFileExists)(this.composeFilePath);
         const command = `docker-compose -f ${this.composeFilePath} push`;
         return await (0, run_command_1.runCommand)(command);

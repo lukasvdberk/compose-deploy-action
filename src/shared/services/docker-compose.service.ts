@@ -9,7 +9,9 @@ const yaml = require('js-yaml');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const exec = util.promisify(require('child_process').exec);
 
-// TODO docs
+/**
+ * Runs a command in the terminal and returns the output
+ */
 export class DockerComposeService {
   isAuthenticated = false;
   constructor(
@@ -35,11 +37,8 @@ export class DockerComposeService {
   }
 
   async authenticateIfNecessary() {
-    if (!this.isAuthenticated) {
-      const command = this.dockerLoginCommand();
-      await runCommand(command);
-      this.isAuthenticated = true;
-    }
+    const command = this.dockerLoginCommand();
+    await runCommand(command);
   }
 
   dockerLoginCommand() {
@@ -76,7 +75,7 @@ export class DockerComposeService {
    * @returns {string} - output of the push command
    */
   async pushImages(): Promise<CliCommandResult> {
-    // await this.authenticateIfNecessary(); // TODO add authentication
+    await this.authenticateIfNecessary();
     await ensureComposeFileExists(this.composeFilePath);
     const command = `docker-compose -f ${this.composeFilePath} push`;
     return await runCommand(command);
