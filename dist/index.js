@@ -28,7 +28,7 @@ const docker_compose_service_1 = require("./shared/services/docker-compose.servi
 const deployment_service_1 = require("./shared/services/deployment.service");
 const fs_1 = require("fs");
 const config = {
-    registryHost: 'https://registry.ployer.app',
+    registryHost: 'registry.ployer.app',
     apiBaseUrl: 'https://api.ployer.app',
 };
 /**
