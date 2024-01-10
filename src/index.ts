@@ -4,7 +4,7 @@ import {DeploymentService} from "./shared/services/deployment.service";
 import { promises as fs } from 'fs';
 
 const config = {
-    registryHost: 'https://registry.ployer.app',
+    registryHost: 'registry.ployer.app',
     apiBaseUrl: 'https://api.ployer.app',
 }
 /**
