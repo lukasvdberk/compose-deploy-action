@@ -28,9 +28,8 @@ const docker_compose_service_1 = require("./shared/services/docker-compose.servi
 const deployment_service_1 = require("./shared/services/deployment.service");
 const fs_1 = require("fs");
 const config = {
-    // TODO set to production when done
     registryHost: 'https://registry.ployer.app',
-    apiBaseUrl: 'https://5e9c-77-250-197-97.ngrok-free.app',
+    apiBaseUrl: 'https://api.ployer.app',
 };
 /**
  * Logs to the console and to the GitHub action log

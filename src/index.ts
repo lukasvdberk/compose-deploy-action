@@ -4,9 +4,8 @@ import {DeploymentService} from "./shared/services/deployment.service";
 import { promises as fs } from 'fs';
 
 const config = {
-    // TODO set to production when done
     registryHost: 'https://registry.ployer.app',
-    apiBaseUrl: 'https://5e9c-77-250-197-97.ngrok-free.app',
+    apiBaseUrl: 'https://api.ployer.app',
 }
 /**
  * Logs to the console and to the GitHub action log

@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DeploymentService = void 0;
 const form_data_1 = __importDefault(require("form-data"));
 const axios_1 = __importDefault(require("axios"));
-const fs = require('fs');
 /**
  * Service for deploying a project to our own API
  */
@@ -25,12 +24,10 @@ class DeploymentService {
         this.apiKey = apiKey;
     }
     async uploadDockerComposeFile(dockerComposeFileContent) {
-        console.log(`${this.getProjectApiUrlWithProjectId()}/set-docker-compose-file`);
         const authorisationHeaders = this.getAuthorisationHeaders();
         await this.postFile(`${this.getProjectApiUrlWithProjectId()}/set-docker-compose-file`, 'PUT', dockerComposeFileContent, authorisationHeaders);
     }
     async deployProject() {
-        console.log(`${this.getProjectApiUrlWithProjectId()}/deploy`);
         const response = await axios_1.default.put(`${this.getProjectApiUrlWithProjectId()}/deploy`, {}, {
             headers: this.getAuthorisationHeaders()
         });
