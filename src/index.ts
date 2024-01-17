@@ -32,7 +32,7 @@ async function main() {
     if(!dockerComposeFileToDeploy) throw new Error('Docker compose file is required');
     if(!apiKey) throw new Error('API key is required. Make sure you set the API_KEY environment variable');
 
-    const dockerComposeFileContent = await getDockerComposeFileContent(dockerComposeFileToDeploy);
+    let dockerComposeFileContent = await getDockerComposeFileContent(dockerComposeFileToDeploy);
     log(`Deploying project ${projectId} with docker-compose file ${dockerComposeFileToDeploy}`);
 
     const composeService = new DockerComposeService(
@@ -56,6 +56,9 @@ async function main() {
 
     // finally deploy to our own backend
     const deploymentService = new DeploymentService(config.apiBaseUrl, projectId, apiKey);
+
+    // re read the compose file content bc during the build the image names have been updated
+    dockerComposeFileContent = await getDockerComposeFileContent(dockerComposeFileToDeploy);
     // update with newest compose file from repository
     await deploymentService.uploadDockerComposeFile(dockerComposeFileContent);
 
