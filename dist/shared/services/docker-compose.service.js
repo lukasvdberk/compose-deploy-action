@@ -54,7 +54,7 @@ class DockerComposeService {
     async composeFileValid() {
         const containerNames = await this.getContainerNames();
         for (const containerName of containerNames) {
-            if (!await this.isContainerNameValid(containerName)) {
+            if (!this.isContainerNameValid(containerName)) {
                 throw new Error(`Container name ${containerName} is not valid, it must be a valid domain name`);
             }
         }
@@ -65,7 +65,7 @@ class DockerComposeService {
      * @param containerName
      * @private
      */
-    async isContainerNameValid(containerName) {
+    isContainerNameValid(containerName) {
         const regex = /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+/;
         return regex.test(containerName.replace('-', '')); // remove hyphens since they are allowed
     }

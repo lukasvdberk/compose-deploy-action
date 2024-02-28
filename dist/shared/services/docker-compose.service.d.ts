@@ -22,7 +22,7 @@ export declare class DockerComposeService {
      * @param containerName
      * @private
      */
-    isContainerNameValid(containerName: string): Promise<boolean>;
+    isContainerNameValid(containerName: string): boolean;
     /**
      * Builds all images
      */
