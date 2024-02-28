@@ -66,7 +66,7 @@ class DockerComposeService {
      * @private
      */
     isContainerNameValid(containerName) {
-        const regex = /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+/;
+        const regex = /^[A-Za-z0-9][A-Za-z0-9-.]*\.\D{2,4}$/;
         return regex.test(containerName.replace('-', '')); // remove hyphens since they are allowed
     }
     /**
