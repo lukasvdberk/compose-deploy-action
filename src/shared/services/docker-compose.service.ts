@@ -41,7 +41,7 @@ export class DockerComposeService {
    */
   async isContainerNameValid(containerName: string) {
     const regex = /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+/;
-    return regex.test(containerName);
+    return regex.test(containerName.replace('-', '')); // remove hyphens since they are allowed
   }
 
   /**
