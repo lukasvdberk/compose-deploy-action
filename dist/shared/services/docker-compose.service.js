@@ -55,7 +55,7 @@ class DockerComposeService {
         const containerNames = await this.getContainerNames();
         for (const containerName of containerNames) {
             if (!this.isContainerNameValid(containerName)) {
-                throw new Error(`Container name ${containerName} is not valid, it must be a valid domain name`);
+                throw new Error(`Container name ${containerName} is not valid, it must be a hostname (For example test-1 or example. Not something like test_1).`);
             }
         }
     }
@@ -66,7 +66,7 @@ class DockerComposeService {
      * @private
      */
     isContainerNameValid(containerName) {
-        const regex = /^[A-Za-z0-9][A-Za-z0-9-.]*\.\D{2,4}$/;
+        const regex = /'[a-z]([-a-z0-9]*[a-z0-9])?'/;
         return regex.test(containerName.replace('-', '')); // remove hyphens since they are allowed
     }
     /**
