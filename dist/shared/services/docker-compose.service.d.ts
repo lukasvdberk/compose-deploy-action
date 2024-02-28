@@ -13,6 +13,17 @@ export declare class DockerComposeService {
         password: string;
     });
     /**
+     * Validates if all container names are valid
+     */
+    composeFileValid(): Promise<void>;
+    /**
+     * Validates if it is a valid container name for kubernetes
+     * Any container name is valid if it is a valid domain name.
+     * @param containerName
+     * @private
+     */
+    isContainerNameValid(containerName: string): Promise<boolean>;
+    /**
      * Builds all images
      */
     buildImages(): Promise<CliCommandResult>;
@@ -28,4 +39,5 @@ export declare class DockerComposeService {
      * @returns {string} - output of the push command
      */
     pushImages(): Promise<CliCommandResult>;
+    private getContainerNames;
 }

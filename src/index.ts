@@ -44,6 +44,8 @@ async function main() {
             password: apiKey // api key is the password
         }
     );
+    log('Validating compose file');
+    await composeService.composeFileValid();
     log('Building images');
     const buildLog = await composeService.buildImages();
     log(buildLog.logMessages);

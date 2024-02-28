@@ -22,6 +22,29 @@ export class DockerComposeService {
   ) {}
 
   /**
+   * Validates if all container names are valid
+   */
+  async composeFileValid() {
+    const containerNames = await this.getContainerNames();
+    for (const containerName of containerNames) {
+      if (!await this.isContainerNameValid(containerName)) {
+        throw new Error(`Container name ${containerName} is not valid, it must be a valid domain name`);
+      }
+    }
+  }
+
+  /**
+   * Validates if it is a valid container name for kubernetes
+   * Any container name is valid if it is a valid domain name.
+   * @param containerName
+   * @private
+   */
+  async isContainerNameValid(containerName: string) {
+    const regex = /[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+/;
+    return regex.test(containerName);
+  }
+
+  /**
    * Builds all images
    */
   async buildImages(): Promise<CliCommandResult> {
@@ -78,5 +101,11 @@ export class DockerComposeService {
     await ensureComposeFileExists(this.composeFilePath);
     const command = `docker-compose -f ${this.composeFilePath} push`;
     return await runCommand(command);
+  }
+
+  private async getContainerNames() {
+    const data = await fs.readFile(this.composeFilePath, 'utf8');
+    const composeConfig = yaml.load(data);
+    return Object.keys(composeConfig.services);
   }
 }
