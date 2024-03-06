@@ -8,6 +8,7 @@ export declare class DockerComposeService {
     private imageNamePrefix;
     private dockerLoginCredentials;
     isAuthenticated: boolean;
+    MAXIMUM_AMOUNT_OF_CONTAINERS: number;
     constructor(composeFilePath: string, registryHost: string, imageNamePrefix: string, dockerLoginCredentials: {
         username: string;
         password: string;

@@ -42,6 +42,7 @@ class DockerComposeService {
     imageNamePrefix;
     dockerLoginCredentials;
     isAuthenticated = false;
+    MAXIMUM_AMOUNT_OF_CONTAINERS = 8;
     constructor(composeFilePath, registryHost, imageNamePrefix, dockerLoginCredentials) {
         this.composeFilePath = composeFilePath;
         this.registryHost = registryHost;
@@ -57,6 +58,9 @@ class DockerComposeService {
             if (!this.isContainerNameValid(containerName)) {
                 throw new Error(`Container name ${containerName} is not valid, it must be a hostname (For example test-1 or example. Not something like test_1).`);
             }
+        }
+        if (this.MAXIMUM_AMOUNT_OF_CONTAINERS < containerNames.length) {
+            throw new Error(`The maximum amount of containers is ${this.MAXIMUM_AMOUNT_OF_CONTAINERS}. You have ${containerNames.length} containers.`);
         }
     }
     /**
