@@ -73,4 +73,5 @@ async function main() {
 main().catch((error) => {
     core.setFailed(error.message)
     log(error.message)
+    log('Deployment failed, see error above. Checkout the documentation at https://ployer.app/docs for more information.')
 });
